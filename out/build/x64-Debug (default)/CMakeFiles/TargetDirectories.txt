@@ -1,0 +1,4 @@
+C:/Users/s2bhalla/OneDrive/Documents/CSE 169/cse169_starter_windows1/out/build/x64-Debug (default)/CMakeFiles/menv.dir
+C:/Users/s2bhalla/OneDrive/Documents/CSE 169/cse169_starter_windows1/out/build/x64-Debug (default)/CMakeFiles/CopyShaders.dir
+C:/Users/s2bhalla/OneDrive/Documents/CSE 169/cse169_starter_windows1/out/build/x64-Debug (default)/CMakeFiles/edit_cache.dir
+C:/Users/s2bhalla/OneDrive/Documents/CSE 169/cse169_starter_windows1/out/build/x64-Debug (default)/CMakeFiles/rebuild_cache.dir
