@@ -18,7 +18,7 @@ private:
     std::vector<unsigned int> indices;
 
 public:
-    Cube(glm::vec3 cubeMin = glm::vec3(-1, -1, -1), glm::vec3 cubeMax = glm::vec3(1, 1, 1));
+    Cube(glm::vec3 cubeMin = glm::vec3(-0.1, -0.1, -0.1), glm::vec3 cubeMax = glm::vec3(0.1, 0.1, 0.1));
     ~Cube();
 
     void draw(const glm::mat4& viewProjMtx, GLuint shader);
