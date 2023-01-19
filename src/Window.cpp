@@ -38,7 +38,7 @@ bool Window::initializeObjects() {
     
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
 
-    return skel->Load("../../../test.skel");
+    return skel->Load("../../../dragon.skel");
 }
 
 void Window::cleanUp() {

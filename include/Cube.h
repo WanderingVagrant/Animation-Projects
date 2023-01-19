@@ -22,7 +22,7 @@ public:
     ~Cube();
 
     void draw(const glm::mat4& viewProjMtx, GLuint shader);
-    void update();
+    void update(glm::mat4 world);
 
     void spin(float deg);
 };
