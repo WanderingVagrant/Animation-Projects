@@ -20,7 +20,7 @@ public:
 
 	Joint();
 	~Joint();
-	void Update();
+	void Update(glm::mat4 pWorld);
 	bool Load(Tokenizer& t);
 	void AddChild();
 	void Draw(const glm::mat4& viewProjMtx, GLuint shader);

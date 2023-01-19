@@ -8,7 +8,7 @@ Joint::~Joint()
 {
 }
 
-void Joint::Update()
+void Joint::Update(glm::mat4 pWorld)
 {
 }
 
