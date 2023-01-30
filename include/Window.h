@@ -21,7 +21,7 @@ public:
 
     // Act as Constructors and desctructors
     static bool initializeProgram();
-    static bool initializeObjects();
+    static bool initializeObjects(char* skelfile, char* skinfile);
     static void cleanUp();
 
     // for the Window

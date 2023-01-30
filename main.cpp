@@ -43,7 +43,7 @@ void print_versions() {
 #endif
 }
 
-int main(void) {
+int main(int argc, char* argv[]) {
     // Create the GLFW window.
     GLFWwindow* window = Window::createWindow(800, 600);
     if (!window) exit(EXIT_FAILURE);
@@ -57,8 +57,14 @@ int main(void) {
 
     // Initialize the shader program; exit if initialization fails.
     if (!Window::initializeProgram()) exit(EXIT_FAILURE);
-    // Initialize objects/pointers for rendering; exit if initialization fails.
-    if (!Window::initializeObjects()) exit(EXIT_FAILURE);
+
+    if (argc == 2) {
+        // Initialize objects/pointers for rendering; exit if initialization fails.
+        if (!Window::initializeObjects(argv[1], NULL)) exit(EXIT_FAILURE);
+    }
+    else {
+        if (!Window::initializeObjects(argv[1], argv[2])) exit(EXIT_FAILURE);
+    }
 
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {

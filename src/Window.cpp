@@ -32,13 +32,13 @@ bool Window::initializeProgram() {
     return true;
 }
 
-bool Window::initializeObjects() {
+bool Window::initializeObjects(char* skelfile, char* skinfile) {
     // Create a Skeleton
     skel = new Skeleton();
     
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
 
-    return skel->Load("../../../dragon.skel");
+    return skel->Load(skelfile);
 }
 
 void Window::cleanUp() {
