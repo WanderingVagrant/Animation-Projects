@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
         // Initialize objects/pointers for rendering; exit if initialization fails.
         if (!Window::initializeObjects(argv[1], NULL)) exit(EXIT_FAILURE);
     }
-    else {
+    else if (argc == 3) {
         if (!Window::initializeObjects(argv[1], argv[2])) exit(EXIT_FAILURE);
     }
 
