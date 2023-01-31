@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "core.h"
 #include "Skeleton.h"
+#include "Skin.h"
 
 class Window {
 public:
@@ -15,13 +16,14 @@ public:
 
     // Objects to render
     static Skeleton* skel;
+    static Skin* skin;
 
     // Shader Program
     static GLuint shaderProgram;
 
     // Act as Constructors and desctructors
     static bool initializeProgram();
-    static bool initializeObjects(char* skelfile, char* skinfile);
+    static bool initializeObjects(int filen, char* files[]);
     static void cleanUp();
 
     // for the Window

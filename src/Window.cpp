@@ -32,13 +32,32 @@ bool Window::initializeProgram() {
     return true;
 }
 
-bool Window::initializeObjects(char* skelfile, char* skinfile) {
-    // Create a Skeleton
-    skel = new Skeleton();
-    
-    // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
+bool Window::initializeObjects(int filen, char*  files[]) {
 
-    return skel->Load(skelfile);
+    Tokenizer token;
+    char temp[256];
+    
+    bool result = true;
+    for (int i = 0; i < filen; ++i) {
+        if (files[i]) {
+            token.Open(files[i]);
+            token.GetToken(temp);
+            if ( strcmp(temp, "balljoint") == 0) {
+                //std::cout << "Foudn Skeleon\n\n";
+                //Create a Skeleton
+                skel = new Skeleton();
+                result &= skel->Load(files[i], token);
+            }
+            else if (strcmp(temp, "positions") == 0) {
+                result &= true;
+            }
+            // Finish
+            token.Close();
+        }
+
+    }
+    return result;
+
 }
 
 void Window::cleanUp() {

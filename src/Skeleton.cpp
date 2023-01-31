@@ -1,4 +1,5 @@
 #include "..\include\Skeleton.h"
+#include <iostream>
 
 Skeleton::Skeleton()
 {
@@ -20,14 +21,10 @@ void Skeleton::Update()
 	root->Update(glm::mat4(1.0f));
 }
 
-bool Skeleton::Load(const char* file) {
-	Tokenizer token;
-	token.Open(file);
-	token.FindToken("balljoint");
+bool Skeleton::Load(const char* file, Tokenizer &token) {
+
+	//std::cout << "Loading skel\n";
 	// Parse tree
 	root = new Joint();
-	root->Load(token);
-	// Finish
-	token.Close();
-	return true;
+	return root->Load(token);
 }

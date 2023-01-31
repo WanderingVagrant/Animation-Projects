@@ -1,17 +1,17 @@
 #pragma once
 #include "core.h"
 #include "Tokenizer.h"
-#include "Joint.h"
+#include "Skeleton.h"
 
-class Skeleton {
+class Skin {
 private:
-	Joint* root;
+	Skeleton* myskel;
 public:
-	Skeleton();
-	~Skeleton();
+	Skin();
+	~Skin();
 
 	void Draw(const glm::mat4& viewProjMtx, GLuint shader);
 	void Update();
 
-	bool Load(const char* file, Tokenizer& token);
+	bool Load(const char * file, Tokenizer &token);
 };

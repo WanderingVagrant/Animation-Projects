@@ -38,7 +38,7 @@ link_directories(
 )
 
 # Add executable
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} "include/Skeleton.h" "src/Skeleton.cpp" "include/Joint.h" "src/Joint.cpp")
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} "include/Skeleton.h" "src/Skeleton.cpp" "include/Joint.h" "src/Joint.cpp" "include/Skin.h" "src/Skin.cpp")
 
 # Link libraries
 target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} glew32s.lib glfw3)
