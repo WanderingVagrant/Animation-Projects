@@ -7,6 +7,7 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Skeleton* Window::skel;
+Skin* Window::skin;
 
 // Camera Properties
 Camera* Cam;
@@ -34,6 +35,8 @@ bool Window::initializeProgram() {
 
 bool Window::initializeObjects(int filen, char*  files[]) {
 
+    skin = NULL;
+    skel = NULL;
     Tokenizer token;
     char temp[256];
     
@@ -49,13 +52,18 @@ bool Window::initializeObjects(int filen, char*  files[]) {
                 result &= skel->Load(files[i], token);
             }
             else if (strcmp(temp, "positions") == 0) {
-                result &= true;
+                skin = new Skin();
+                result &= skin->Load(files[i], token);
             }
             // Finish
             token.Close();
         }
 
     }
+    if (skin != NULL) {
+        skin->myskel = skel;
+    }
+
     return result;
 
 }

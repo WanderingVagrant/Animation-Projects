@@ -2,6 +2,7 @@
 
 Skin::Skin()
 {
+	myskel = NULL;
 }
 
 Skin::~Skin()

@@ -5,8 +5,8 @@
 
 class Skin {
 private:
-	Skeleton* myskel;
 public:
+	Skeleton* myskel;
 	Skin();
 	~Skin();
 

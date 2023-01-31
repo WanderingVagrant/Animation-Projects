@@ -143,8 +143,14 @@ void Cube::draw(const glm::mat4& viewProjMtx, GLuint shader) {
     // Bind the VAO
     glBindVertexArray(VAO);
 
+    //Turn on wireframe mode
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
     // draw the points using triangles, indexed with the EBO
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+
+    //Turn off wireframe mode
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     // Unbind the VAO and shader program
     glBindVertexArray(0);
