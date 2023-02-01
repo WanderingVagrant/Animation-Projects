@@ -1,4 +1,7 @@
 #include "Skin.h"
+#include <iostream>
+#define GLM_ENABLE_EXPERIMENTAL
+#include "glm/ext.hpp"
 
 Skin::Skin()
 {
@@ -33,9 +36,56 @@ void Skin::Draw(const glm::mat4& viewProjMtx, GLuint shader)
 
 void Skin::Update()
 {
-	for (int i = 0; i < positions.size(); ++i) {
-
+	
+	if (myskel == NULL) {
+		//std::cout << "NoskelNoupdat\n\n\n";
+		return;
 	}
+	int i;
+
+	std::vector<glm::mat4> skinning = std::vector<glm::mat4>();
+	std::vector<glm::vec3> newpos = std::vector<glm::vec3>();
+	std::vector<glm::vec3> newnorm = std::vector<glm::vec3>();
+
+	for (i = 0; i < bindinginv.size(); ++i) {
+		glm::mat4 skinner = (myskel->joints[i]->World) * bindinginv[i];
+		
+
+		//For scale or shear compute inverse transpose
+		//skinner = glm::transpose(glm::inverse(skinner));
+		
+		
+		skinning.push_back(skinner);
+	}
+
+	for (i = 0; i < positions.size(); ++i) {
+		glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 norm = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec4 longpos = glm::vec4(positions[i], 1);
+		glm::vec4 longnorm = glm::vec4(normals[i], 0);
+
+		//Sum over weights
+		for (std::tuple<int, float> w : weights[i]) {
+			int jindex = std::get<0>(w);
+			float weight = std::get<1>(w);
+			pos = pos + (weight * glm::vec3(skinning[jindex] * longpos));
+			norm = norm + (weight * glm::vec3(skinning[jindex] * longnorm));
+		}
+		newpos.push_back(pos);
+		newnorm.push_back(glm::normalize(norm));
+	}
+
+	// Bind to the first VBO - We will use it to store the vertices
+	glBindBuffer(GL_ARRAY_BUFFER, VBO_positions);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * newpos.size(), newpos.data(), GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
+
+	// Bind to the second VBO - We will use it to store the normals
+	glBindBuffer(GL_ARRAY_BUFFER, VBO_normals);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * newnorm.size(), newnorm.data(), GL_STATIC_DRAW);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
 }
 
 bool Skin::Load(const char* file, Tokenizer& token)

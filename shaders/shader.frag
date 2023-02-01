@@ -7,8 +7,15 @@ in vec3 fragNormal;
 
 // uniforms used for lighting
 uniform vec3 AmbientColor = vec3(0.2);
-uniform vec3 LightDirection = normalize(vec3(1, 5, 2));
-uniform vec3 LightColor = vec3(1);
+uniform vec3 LightDirection1 = normalize(vec3(1, 5, 2));
+uniform vec3 LightColor1 = vec3(1, 0, 0);
+uniform vec3 LightDirection2 = normalize(vec3(-1, 5, -2));
+uniform vec3 LightColor2 = vec3(0, 1, 0);
+
+uniform vec3 LightDirection3 = normalize(vec3(-1, 5, 2));
+uniform vec3 LightColor3 = vec3(0, 0, 1);
+
+
 uniform vec3 DiffuseColor;	// passed in from c++ side NOTE: you can also set the value here and then remove 
 							// color from the c++ side
 
@@ -19,7 +26,9 @@ void main()
 {
 
 	// Compute irradiance (sum of ambient & direct lighting)
-	vec3 irradiance = AmbientColor + LightColor * max(0, dot(LightDirection, fragNormal));
+	vec3 irradiance = AmbientColor + LightColor1 * max(0, dot(LightDirection1, fragNormal)) +
+		LightColor2 * max(0, dot(LightDirection2, fragNormal)) + 
+		LightColor3 * max(0, dot(LightDirection3, fragNormal));
 
 	// Diffuse reflectance
 	vec3 reflectance = irradiance * DiffuseColor;
