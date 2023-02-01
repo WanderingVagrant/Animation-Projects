@@ -26,5 +26,7 @@ bool Skeleton::Load(const char* file, Tokenizer &token) {
 	//std::cout << "Loading skel\n";
 	// Parse tree
 	root = new Joint();
-	return root->Load(token);
+	root->Load(token);
+	root->getJoints(joints);
+	return true;
 }

@@ -1,6 +1,6 @@
 #include "Joint.h"
 #include <iostream>
-Joint::Joint()
+Joint::Joint(Joint * par)
 {
 	Local = glm::mat4(1.0f);
 	World = glm::mat4(1.0f);
@@ -11,6 +11,7 @@ Joint::Joint()
 	dofs.push_back({ 0, -100000, 100000 });
 	boxmin = glm::vec3(-0.1, -0.1, -0.1);
 	boxmax = glm::vec3(0.1, 0.1, 0.1);
+	parent = par;
 }
 
 Joint::~Joint()
@@ -70,7 +71,7 @@ bool Joint::Load(Tokenizer& token) {
 			dofs[2].value = token.GetFloat();
 		}
 		else if (strcmp(temp, "balljoint") == 0) {
-			Joint* jnt = new Joint();
+			Joint* jnt = new Joint(this);
 			jnt->Load(token);
 			AddChild(jnt);
 		}
@@ -106,6 +107,13 @@ void Joint::Draw(const glm::mat4& viewProjMtx, GLuint shader)
 	cube->draw(viewProjMtx, shader);
 	for (Joint* child : childs) {
 		child->Draw(viewProjMtx, shader);
+	}
+}
+void Joint::getJoints(std::vector<Joint*>& list)
+{
+	list.push_back(this);
+	for (Joint* child : childs) {
+		child->getJoints(list);
 	}
 }
 ;

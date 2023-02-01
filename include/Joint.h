@@ -13,6 +13,8 @@ public:
 	glm::vec3 boxmin;
 	glm::vec3 boxmax;
 
+	Joint* parent;
+
 	struct DOF {
 		float value;
 		float min;
@@ -23,11 +25,12 @@ public:
 
 	std::vector<Joint *> childs;
 
-	Joint();
+	Joint(Joint* par = NULL);
 	~Joint();
 	void Update(glm::mat4 pWorld);
 	bool Load(Tokenizer& t);
 	void AddChild(Joint * child);
 	void Draw(const glm::mat4& viewProjMtx, GLuint shader);
+	void getJoints(std::vector<Joint*>& list);
 
 };

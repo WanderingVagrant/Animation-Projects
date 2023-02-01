@@ -52,6 +52,8 @@ bool Window::initializeObjects(int filen, char*  files[]) {
                 result &= skel->Load(files[i], token);
             }
             else if (strcmp(temp, "positions") == 0) {
+
+                std::cout << "Found skin: " << files[i] << "\n\n";
                 skin = new Skin();
                 result &= skin->Load(files[i], token);
             }
@@ -70,7 +72,12 @@ bool Window::initializeObjects(int filen, char*  files[]) {
 
 void Window::cleanUp() {
     // Deallcoate the objects.
-    delete skel;
+    if (skel != NULL) {
+        delete skel;
+    }
+    if (skin != NULL) {
+        delete skin;
+    }
 
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
@@ -134,15 +141,25 @@ void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
 
-    skel->Update();
+    if (skel != NULL) {
+        skel->Update();
+    }
+    if (skin != NULL) {
+        skin->Update();
+    }
 }
 
 void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Render the object.
-    skel->Draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    // Render the objects.
+    if (skel != NULL) {
+        skel->Draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    }
+    if (skin != NULL) {
+        skin->Draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    }
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
