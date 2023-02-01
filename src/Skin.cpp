@@ -18,10 +18,12 @@ void Skin::Draw(const glm::mat4& viewProjMtx, GLuint shader)
 {
 	// actiavte the shader program
 	glUseProgram(shader);
-
+	glm:: vec3 color = glm::vec3(0.5f, 0.95f, 0.2f);
 	// get the locations and send the uniforms to the shader
 	glUniformMatrix4fv(glGetUniformLocation(shader, "viewProj"), 1, false, (float*)&viewProjMtx);
 	glUniformMatrix4fv(glGetUniformLocation(shader, "model"), 1, GL_FALSE, (float*)&model);
+	glUniform3fv(glGetUniformLocation(shader, "DiffuseColor"), 1, &color[0]);
+
 
 	// Bind the VAO
 	glBindVertexArray(VAO);
