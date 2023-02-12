@@ -160,6 +160,45 @@ void Window::setupGUI(GLFWwindow* window)
     ImGui_ImplOpenGL3_Init("#version 330");
 }
 
+void Window::doGUI(Skeleton * skel)
+{
+    //ImGui New Frame
+    ImGui_ImplOpenGL3_NewFrame();
+
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    //ImGui Build Frame
+    ImGui::Begin("DOF Editor");
+
+    static int index = 0;
+    Joint* curr = skel->joints[index];
+    ImGui::Text(curr->name);
+    
+    ImGui::SliderFloat("X ROT", &(curr->dofs[0].value), glm::max(0.0f, curr->dofs[0].min), glm::min(glm::two_pi<float>(), curr->dofs[0].max));
+    ImGui::SliderFloat("Y ROT", &(curr->dofs[1].value), glm::max(0.0f, curr->dofs[1].min), glm::min(glm::two_pi<float>(), curr->dofs[1].max));
+    ImGui::SliderFloat("Z ROT", &(curr->dofs[2].value), glm::max(0.0f, curr->dofs[2].min), glm::min(glm::two_pi<float>(), curr->dofs[2].max));
+    
+    
+
+    ImGui::InputInt("Joint Index", &index);
+    if (index >= skel->joints.size()) {
+        index = skel->joints.size() - 1;
+    }
+    if (index < 0) {
+        index = 0;
+    }
+
+    ImGui::End();
+
+
+    //Render ImGui
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
+}
+
 // update and draw functions
 void Window::idleCallback() {
     // Perform any updates as necessary.
@@ -190,31 +229,10 @@ void Window::displayCallback(GLFWwindow* window) {
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
 
-
-    //ImGui New Frame
-    ImGui_ImplOpenGL3_NewFrame();
-
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-
-
-    //ImGui Rendering
-    ImGui::Begin("DOF Editor");
-
-    //io.AddFocusEvent(true);
-
-    char buf[50];
-    float f;
-    //ImGui::InputText("string", buf, IM_ARRAYSIZE(buf));
-    //ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-    //ImGui::SetKeyboardFocusHere();
-    ImGui::Text("PLACEHOLDER");
-
-    ImGui::End();
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    
+    if (skel != NULL) {
+        Window::doGUI(skel);
+    }
+   
     // Swap buffers.
     glfwSwapBuffers(window);
 }

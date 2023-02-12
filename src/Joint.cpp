@@ -12,6 +12,7 @@ Joint::Joint(Joint * par)
 	boxmin = glm::vec3(-0.1, -0.1, -0.1);
 	boxmax = glm::vec3(0.1, 0.1, 0.1);
 	parent = par;
+	name = new char[256];
 }
 
 Joint::~Joint()
@@ -21,7 +22,11 @@ Joint::~Joint()
 void Joint::Update(glm::mat4 pWorld)
 {
 
-		
+	Local = glm::translate(Offset) *
+		glm::rotate(dofs[2].value, glm::vec3(0.0f, 0.0f, 1.0f)) *
+		glm::rotate(dofs[1].value, glm::vec3(0.0f, 1.0f, 0.0f)) *
+		glm::rotate(dofs[0].value, glm::vec3(1.0f, 0.0f, 0.0f));
+
 
 	World = pWorld * Local;
 
@@ -33,6 +38,8 @@ void Joint::Update(glm::mat4 pWorld)
 }
 
 bool Joint::Load(Tokenizer& token) {
+	token.GetToken(name);
+	std::cout << "Loading Joint:" << name << "\n";
 	token.FindToken("{");
 
 	while (1) {	

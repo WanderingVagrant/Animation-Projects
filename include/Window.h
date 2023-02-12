@@ -33,6 +33,7 @@ public:
     static GLFWwindow* createWindow(int width, int height);
     static void resizeCallback(GLFWwindow* window, int width, int height);
     static void setupGUI(GLFWwindow* window);
+    static void doGUI(Skeleton * skel);
 
     // update and draw functions
     static void idleCallback();

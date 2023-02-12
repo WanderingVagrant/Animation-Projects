@@ -6,6 +6,7 @@
 
 class Joint {
 public:
+	char* name;
 	glm::mat4 Local;
 	glm::mat4 World;
 	Cube* cube;
