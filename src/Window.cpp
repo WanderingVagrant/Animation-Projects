@@ -126,7 +126,6 @@ GLFWwindow* Window::createWindow(int width, int height) {
     LeftDown = RightDown = false;
     MouseX = MouseY = 0;
 
-    //StartGUI
 
     //Start GUI
     IMGUI_CHECKVERSION();
@@ -134,8 +133,8 @@ GLFWwindow* Window::createWindow(int width, int height) {
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("version 330");
-
+    ImGui_ImplOpenGL3_Init("#version 330");
+    
 
 
 
@@ -168,11 +167,13 @@ void Window::idleCallback() {
 }
 
 void Window::displayCallback(GLFWwindow* window) {
+
     // Clear the color and depth buffers.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //ImGui New Frame
     ImGui_ImplOpenGL3_NewFrame();
+
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
@@ -183,12 +184,12 @@ void Window::displayCallback(GLFWwindow* window) {
     if (skin != NULL) {
         skin->Draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     }
-
     //ImGui Rendering
     ImGui::Begin("DOF Editor");
     ImGui::Text("PLACEHOLDER");
     ImGui::End();
 
+    
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
