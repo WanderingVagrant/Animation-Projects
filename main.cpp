@@ -52,6 +52,10 @@ int main(int argc, char* argv[]) {
     print_versions();
     // Setup callbacks.
     setup_callbacks(window);
+
+    //Setup Gui
+    Window::setupGUI(window);
+
     // Setup OpenGL settings.
     setup_opengl_settings();
 

@@ -32,6 +32,7 @@ public:
     // for the Window
     static GLFWwindow* createWindow(int width, int height);
     static void resizeCallback(GLFWwindow* window, int width, int height);
+    static void setupGUI(GLFWwindow* window);
 
     // update and draw functions
     static void idleCallback();

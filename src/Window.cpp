@@ -127,19 +127,14 @@ GLFWwindow* Window::createWindow(int width, int height) {
     MouseX = MouseY = 0;
 
 
-    //Start GUI
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330");
     
 
 
 
     // Call the resize callback to make sure things get drawn immediately.
     Window::resizeCallback(window, width, height);
+
+
 
     return window;
 }
@@ -151,6 +146,18 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 
     Cam->SetAspect(float(width) / float(height));
+}
+
+void Window::setupGUI(GLFWwindow* window)
+{
+
+    //Start GUI
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
 }
 
 // update and draw functions
@@ -171,12 +178,7 @@ void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //ImGui New Frame
-    ImGui_ImplOpenGL3_NewFrame();
-
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-
+    
     // Render the objects.
     if (skel != NULL) {
         skel->Draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
@@ -184,19 +186,35 @@ void Window::displayCallback(GLFWwindow* window) {
     if (skin != NULL) {
         skin->Draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     }
-    //ImGui Rendering
-    ImGui::Begin("DOF Editor");
-    ImGui::Text("PLACEHOLDER");
-    ImGui::End();
-
-    
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
+
+
+    //ImGui New Frame
+    ImGui_ImplOpenGL3_NewFrame();
+
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+
+    //ImGui Rendering
+    ImGui::Begin("DOF Editor");
+
+    //io.AddFocusEvent(true);
+
+    char buf[50];
+    float f;
+    //ImGui::InputText("string", buf, IM_ARRAYSIZE(buf));
+    //ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+    //ImGui::SetKeyboardFocusHere();
+    ImGui::Text("PLACEHOLDER");
+
+    ImGui::End();
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    
     // Swap buffers.
     glfwSwapBuffers(window);
 }
@@ -232,12 +250,16 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 }
 
 void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods) {
-    if (button == GLFW_MOUSE_BUTTON_LEFT) {
-        LeftDown = (action == GLFW_PRESS);
+    ImGuiIO& io = ImGui::GetIO();
+    if (!io.WantCaptureMouse) {
+        if (button == GLFW_MOUSE_BUTTON_LEFT) {
+            LeftDown = (action == GLFW_PRESS);
+        }
+        if (button == GLFW_MOUSE_BUTTON_RIGHT) {
+            RightDown = (action == GLFW_PRESS);
+        }
     }
-    if (button == GLFW_MOUSE_BUTTON_RIGHT) {
-        RightDown = (action == GLFW_PRESS);
-    }
+
 }
 
 void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
