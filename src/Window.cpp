@@ -79,6 +79,11 @@ void Window::cleanUp() {
         delete skin;
     }
 
+    //DeleteImgui
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
 }
@@ -121,6 +126,19 @@ GLFWwindow* Window::createWindow(int width, int height) {
     LeftDown = RightDown = false;
     MouseX = MouseY = 0;
 
+    //StartGUI
+
+    //Start GUI
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("version 330");
+
+
+
+
     // Call the resize callback to make sure things get drawn immediately.
     Window::resizeCallback(window, width, height);
 
@@ -153,6 +171,11 @@ void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    //ImGui New Frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
     // Render the objects.
     if (skel != NULL) {
         skel->Draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
@@ -160,6 +183,16 @@ void Window::displayCallback(GLFWwindow* window) {
     if (skin != NULL) {
         skin->Draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     }
+
+    //ImGui Rendering
+    ImGui::Begin("DOF Editor");
+    ImGui::Text("PLACEHOLDER");
+    ImGui::End();
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
