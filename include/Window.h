@@ -2,6 +2,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+#include "imgui_internal.h"
 
 #include "Camera.h"
 #include "Cube.h"
@@ -16,6 +17,7 @@ public:
     static int width;
     static int height;
     static const char* windowTitle;
+    static bool animating;
 
     // Objects to render
     static Skeleton* skel;

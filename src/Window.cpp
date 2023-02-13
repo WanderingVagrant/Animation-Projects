@@ -8,6 +8,8 @@ const char* Window::windowTitle = "Model Environment";
 // Objects to render
 Skeleton* Window::skel;
 Skin* Window::skin;
+bool Window::animating;
+
 
 // Camera Properties
 Camera* Cam;
@@ -30,6 +32,8 @@ bool Window::initializeProgram() {
         return false;
     }
 
+    //Initialize animating
+    animating = false;
     return true;
 }
 
@@ -90,6 +94,7 @@ void Window::cleanUp() {
 
 // for the Window
 GLFWwindow* Window::createWindow(int width, int height) {
+
     // Initialize GLFW.
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
@@ -174,11 +179,18 @@ void Window::doGUI(Skeleton * skel)
     static int index = 0;
     Joint* curr = skel->joints[index];
     ImGui::Text(curr->name);
-    
+   
+
+    if (animating) {
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+    }
     ImGui::SliderFloat("X ROT", &(curr->dofs[0].value), glm::max(0.0f, curr->dofs[0].min), glm::min(glm::two_pi<float>(), curr->dofs[0].max));
     ImGui::SliderFloat("Y ROT", &(curr->dofs[1].value), glm::max(0.0f, curr->dofs[1].min), glm::min(glm::two_pi<float>(), curr->dofs[1].max));
     ImGui::SliderFloat("Z ROT", &(curr->dofs[2].value), glm::max(0.0f, curr->dofs[2].min), glm::min(glm::two_pi<float>(), curr->dofs[2].max));
-    
+
+    if(animating) {
+        ImGui::PopItemFlag();
+    }
     
 
     ImGui::InputInt("Joint Index", &index);
