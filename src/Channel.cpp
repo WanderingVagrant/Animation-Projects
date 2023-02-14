@@ -65,17 +65,17 @@ bool Channel::Load(Tokenizer& token)
 		//std::cout << "Inrule " << temp << "\n\n";
 		if (atof(temp)) {
 			key->tangentIn = float(atof(temp));
-			key->ruleIn = -1;
+			key->ruleIn = 0;
 			//std::cout << "Loading float " << "\n\n";
 		}
 		else if (strcmp(temp, "flat") == 0){
-			key->ruleIn = 0;
-		}
-		else if (strcmp(temp, "linear") == 0) {
 			key->ruleIn = 1;
 		}
-		else if (strcmp(temp, "smooth") == 0) {
+		else if (strcmp(temp, "linear") == 0) {
 			key->ruleIn = 2;
+		}
+		else if (strcmp(temp, "smooth") == 0) {
+			key->ruleIn = 3;
 		}
 
 
@@ -101,6 +101,13 @@ bool Channel::Load(Tokenizer& token)
 	}
 	token.FindToken("}");
 	token.FindToken("}");
+
+
+	//Compute tangents and oceeficients
+	for (Keyframe* k : keyframes) {
+		k->computeTangents();
+		k->computeCoefficients();
+	}
 	return true;
 }
 
