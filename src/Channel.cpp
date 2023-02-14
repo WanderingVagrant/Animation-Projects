@@ -138,18 +138,19 @@ float Channel::eval(float t)
 		}
 		if (extrapIn == 2) {
 			float range = keyframes[numKeyframes - 1]->time - keyframes[0]->time;
-			float nt = fmod(t - keyframes[0]->time, range);
-			if (nt < 0) {
-				nt = nt + keyframes[numKeyframes - 1]->time;
+			if (t - keyframes[0]->time < 0) {
+				t = t + range;
 			}
+			float nt = fmod(t - keyframes[0]->time, range);
+
 			return eval(nt + keyframes[0]->time);
 		}
 		if (extrapIn == 3) {
 			float range = keyframes[numKeyframes - 1]->time - keyframes[0]->time;
-			float nt = fmod(t - keyframes[0]->time, range);
-			if (nt < 0) {
-				nt = nt + keyframes[numKeyframes - 1]->time;
+			if (t - keyframes[0]->time < 0) {
+				t = t + range;
 			}
+			float nt = fmod(t - keyframes[0]->time, range);
 			return eval(nt + keyframes[0]->time) - ((int)((t - keyframes[0]->time) / range))* (keyframes[numKeyframes - 1]->value - keyframes[0]->value);
 		}
 		if (extrapIn == 4) {
@@ -165,18 +166,19 @@ float Channel::eval(float t)
 		}
 		if (extrapOut == 2) {
 			float range = keyframes[numKeyframes - 1]->time - keyframes[0]->time;
-			float nt = fmod(t - keyframes[0]->time, range);
-			if (nt < 0) {
-				nt = nt + keyframes[numKeyframes - 1]->time;
+			if (t - keyframes[0]->time < 0) {
+				t = t + range;
 			}
+			float nt = fmod(t - keyframes[0]->time, range);
+
 			return eval(nt + keyframes[0]->time);
 		}
 		if (extrapOut == 3) {
 			float range = keyframes[numKeyframes - 1]->time - keyframes[0]->time;
-			float nt = fmod(t - keyframes[0]->time, range);
-			if (nt < 0) {
-				nt = nt + keyframes[numKeyframes - 1]->time;
+			if (t - keyframes[0]->time < 0) {
+				t = t + range;
 			}
+			float nt = fmod(t - keyframes[0]->time, range);
 			return eval(nt + keyframes[0]->time) + ((int) ((t- keyframes[0]->time) /range)  ) * (keyframes[numKeyframes - 1]->value - keyframes[0]->value);
 		}
 		if (extrapOut == 4) {
