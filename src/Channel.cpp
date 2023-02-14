@@ -84,16 +84,16 @@ bool Channel::Load(Tokenizer& token)
 		//std::cout << "Outrule " << temp << "\n\n";
 		if (atof(temp)) {
 			key->tangentOut = float(atof(temp));
-			key->ruleOut = -1;
-		}
-		else if (strcmp(temp, "flat") == 0) {
 			key->ruleOut = 0;
 		}
-		else if (strcmp(temp, "linear") == 0) {
+		else if (strcmp(temp, "flat") == 0) {
 			key->ruleOut = 1;
 		}
-		else if (strcmp(temp, "smooth") == 0) {
+		else if (strcmp(temp, "linear") == 0) {
 			key->ruleOut = 2;
+		}
+		else if (strcmp(temp, "smooth") == 0) {
+			key->ruleOut = 3;
 		}
 
 		//Add Key
@@ -111,6 +111,15 @@ bool Channel::Load(Tokenizer& token)
 	for (Keyframe* k : keyframes) {
 		k->computeCoefficients();
 	}
+	
+	/*
+	//DEBUG
+	for (Keyframe* k : keyframes) {
+		printf("TangentIn: %f", k->tangentIn);
+		printf("TangentOut: %f\n", k->tangentOut);
+
+	}
+	*/
 	return true;
 }
 

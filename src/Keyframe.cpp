@@ -31,10 +31,10 @@ void Keyframe::computeTangents()
 	if (ruleOut == 3) {
 		if (next != 0) {
 			if (prev != 0) {
-				tangentIn = (next->value - prev->value) / (next->time - prev->time);
+				tangentOut = (next->value - prev->value) / (next->time - prev->time);
 			}
 			else {
-				tangentIn = (next->value - value) / (next->time - time);
+				tangentOut = (next->value - value) / (next->time - time);
 			}
 		}
 	}
