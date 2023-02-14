@@ -134,7 +134,7 @@ float Channel::eval(float t)
 			return keyframes[0]->value;
 		}
 		if (extrapIn == 1) {
-			return keyframes[0]->value - keyframes[0]->tangentIn * (keyframes[0]->time - t);
+			return keyframes[0]->value - keyframes[0]->tangentOut * (keyframes[0]->time - t);
 		}
 		if (extrapIn == 2) {
 			float range = keyframes[numKeyframes - 1]->time - keyframes[0]->time;
@@ -157,13 +157,13 @@ float Channel::eval(float t)
 		}
 	}
 	if (t > keyframes[numKeyframes-1]->time) {
-		if (extrapIn == 0) {
+		if (extrapOut == 0) {
 			return keyframes[numKeyframes - 1]->value;
 		}
-		if (extrapIn == 1) {
-			return keyframes[numKeyframes - 1]->value + keyframes[numKeyframes - 1]->tangentOut * (t- keyframes[numKeyframes - 1]->time);
+		if (extrapOut == 1) {
+			return keyframes[numKeyframes - 1]->value + keyframes[numKeyframes - 1]->tangentIn * (t- keyframes[numKeyframes - 1]->time);
 		}
-		if (extrapIn == 2) {
+		if (extrapOut == 2) {
 			float range = keyframes[numKeyframes - 1]->time - keyframes[0]->time;
 			float nt = fmod(t - keyframes[0]->time, range);
 			if (nt < 0) {
@@ -171,7 +171,7 @@ float Channel::eval(float t)
 			}
 			return eval(nt + keyframes[0]->time);
 		}
-		if (extrapIn == 3) {
+		if (extrapOut == 3) {
 			float range = keyframes[numKeyframes - 1]->time - keyframes[0]->time;
 			float nt = fmod(t - keyframes[0]->time, range);
 			if (nt < 0) {
@@ -179,7 +179,7 @@ float Channel::eval(float t)
 			}
 			return eval(nt + keyframes[0]->time) + ((int) ((t- keyframes[0]->time) /range)  ) * (keyframes[numKeyframes - 1]->value - keyframes[0]->value);
 		}
-		if (extrapIn == 4) {
+		if (extrapOut == 4) {
 			return 0;
 		}
 	}
