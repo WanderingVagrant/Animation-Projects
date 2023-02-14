@@ -20,3 +20,7 @@ bool Animation::Load(Tokenizer& token)
 
 	return true;
 }
+
+void Animation::update(float t, std::vector<Joint*> joints)
+{
+}

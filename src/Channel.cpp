@@ -123,6 +123,26 @@ bool Channel::Load(Tokenizer& token)
 	return true;
 }
 
-void Channel::eval(float t)
+float Channel::eval(float t)
 {
+	if (numKeyframes == 0) {
+		return 0;
+	}
+
+	if (t < keyframes[0]->time) {
+		return keyframes[0]->value;
+	}
+	if (t > keyframes[numKeyframes-1]->time) {
+		return keyframes[numKeyframes-1]->value;
+	}
+
+	float u;
+	for (int i = 1; i < numKeyframes; ++i) {
+		if (t < keyframes[i]->time) {
+			u = t - keyframes[i-1]->time;
+			glm::vec4 co = keyframes[i - 1]->coef;
+			return (co.w + u * (co.z + u * (co.y + u * (co.x))));
+		}
+	}
+	return keyframes[numKeyframes - 1]->value;
 }

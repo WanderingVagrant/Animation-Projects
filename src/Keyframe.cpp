@@ -47,4 +47,9 @@ void Keyframe::computeCoefficients()
 	}
 	float scale = next->time - time;
 	coef = HERM * glm::vec4(value, next->value, scale * tangentOut, scale * next->tangentIn);
+
+	//Scale by t1-t0
+	coef.x /= (scale *scale *scale);
+	coef.y /= (scale * scale);
+	coef.z /= scale;
 }
