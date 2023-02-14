@@ -19,6 +19,7 @@ void Skeleton::Draw(const glm::mat4& viewProjMtx, GLuint shader)
 
 void Skeleton::Update()
 {
+	//std::cout << "Updating skel\n";
 	if(anim != NULL){
 		anim->update(glfwGetTime(), joints);
 	}
