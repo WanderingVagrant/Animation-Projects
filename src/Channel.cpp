@@ -106,6 +106,9 @@ bool Channel::Load(Tokenizer& token)
 	//Compute tangents and oceeficients
 	for (Keyframe* k : keyframes) {
 		k->computeTangents();
+	}
+	//Compute tangents and oceeficients
+	for (Keyframe* k : keyframes) {
 		k->computeCoefficients();
 	}
 	return true;

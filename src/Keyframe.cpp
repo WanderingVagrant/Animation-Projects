@@ -1,5 +1,8 @@
 #include "..\include\Keyframe.h"
-
+const glm::mat4 Keyframe::HERM = glm::mat4(2, -3, 0, 1,
+									-2, 3, 0, 0,
+									1, -2, 1, 0,
+									1, -1, 0, 0);
 void Keyframe::computeTangents()
 {
 	if (ruleIn == 2) {
@@ -39,4 +42,9 @@ void Keyframe::computeTangents()
 
 void Keyframe::computeCoefficients()
 {
+	if (next == 0) {
+		return;
+	}
+	float scale = next->time - time;
+	coef = HERM * glm::vec4(value, next->value, scale * tangentOut, scale * next->tangentIn);
 }
