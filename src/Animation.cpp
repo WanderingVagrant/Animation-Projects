@@ -21,6 +21,18 @@ bool Animation::Load(Tokenizer& token)
 	return true;
 }
 
-void Animation::update(float t, std::vector<Joint*> joints)
+void Animation::update(float t, std::vector<Joint*>& joints)
 {
+	if (joints.size() == 0) {
+		return;
+	}
+	int i = 0;
+	joints[0]->Offset.x = channels[i++]->eval(t);
+	joints[1]->Offset.y = channels[i++]->eval(t);
+	joints[2]->Offset.z = channels[i++]->eval(t);
+	for (Joint* j : joints) {
+		j->dofs[0].value = channels[i++]->eval(t);
+		j->dofs[1].value = channels[i++]->eval(t);
+		j->dofs[3].value = channels[i++]->eval(t);
+	}
 }

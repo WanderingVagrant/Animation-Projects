@@ -4,6 +4,7 @@
 Skeleton::Skeleton()
 {
 	this->root = NULL;
+	this->anim = NULL;
 }
 
 Skeleton::~Skeleton()
@@ -18,6 +19,9 @@ void Skeleton::Draw(const glm::mat4& viewProjMtx, GLuint shader)
 
 void Skeleton::Update()
 {
+	if(anim != NULL){
+		anim->update(glfwGetTime(), joints);
+	}
 	root->Update(glm::mat4(1.0f));
 }
 

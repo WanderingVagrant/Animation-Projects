@@ -9,6 +9,6 @@ public:
 	float start, end;
 	std::vector<Channel*> channels;
 	bool Load(Tokenizer& token);
-	void update(float t, std::vector<Joint*> joints);
+	void update(float t, std::vector<Joint*>& joints);
 
 };

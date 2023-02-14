@@ -82,6 +82,9 @@ bool Window::initializeObjects(int filen, char*  files[]) {
         skel->anim = anim;
     }
 
+    //Set Time to zero once objects are loaded
+    glfwSetTime(0);
+
     return result;
 
 }
