@@ -1,10 +1,11 @@
 #pragma once
 #include <vector>
 #include "Channel.h"
+#include <iostream>
 
 class Animation {
+public:
+	float start, end;
 	std::vector<Channel*> channels;
-	bool load();
-
-
+	bool Load(Tokenizer& token);
 };

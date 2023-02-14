@@ -90,7 +90,7 @@ void Skin::Update()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
 }
 
-bool Skin::Load(const char* file, Tokenizer& token)
+bool Skin::Load(Tokenizer& token)
 {
 	model = glm::mat4(1.0f);
 	int i = 0;

@@ -10,7 +10,7 @@
 #include "core.h"
 #include "Skeleton.h"
 #include "Skin.h"
-
+#include "Animation.h"
 class Window {
 public:
     // Window Properties
@@ -22,6 +22,7 @@ public:
     // Objects to render
     static Skeleton* skel;
     static Skin* skin;
+    static Animation* anim;
 
     // Shader Program
     static GLuint shaderProgram;

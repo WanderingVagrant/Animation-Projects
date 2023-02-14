@@ -8,6 +8,7 @@ const char* Window::windowTitle = "Model Environment";
 // Objects to render
 Skeleton* Window::skel;
 Skin* Window::skin;
+Animation* Window::anim;
 bool Window::animating;
 
 
@@ -50,24 +51,35 @@ bool Window::initializeObjects(int filen, char*  files[]) {
             token.Open(files[i]);
             token.GetToken(temp);
             if ( strcmp(temp, "balljoint") == 0) {
-                //std::cout << "Foudn Skeleon\n\n";
+                std::cout << "Foudn Skeleon\n\n";
                 //Create a Skeleton
                 skel = new Skeleton();
-                result &= skel->Load(files[i], token);
+                result &= skel->Load(token);
             }
             else if (strcmp(temp, "positions") == 0) {
 
                 std::cout << "Found skin: " << files[i] << "\n\n";
                 skin = new Skin();
-                result &= skin->Load(files[i], token);
+                result &= skin->Load(token);
+            }
+            else if (strcmp(temp, "animation") == 0) {
+                std::cout << "Found anim: " << files[i] << "\n\n";
+                anim = new Animation();
+                result &= anim->Load(token);
+                animating = true;
             }
             // Finish
             token.Close();
         }
 
     }
+    std::cout << "Finish Load " << "\n\n";
     if (skin != NULL) {
         skin->myskel = skel;
+    }
+
+    if (skel != NULL) {
+        skel->anim = anim;
     }
 
     return result;

@@ -21,7 +21,7 @@ void Skeleton::Update()
 	root->Update(glm::mat4(1.0f));
 }
 
-bool Skeleton::Load(const char* file, Tokenizer &token) {
+bool Skeleton::Load(Tokenizer &token) {
 
 	//std::cout << "Loading skel\n";
 	// Parse tree

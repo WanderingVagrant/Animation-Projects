@@ -5,7 +5,7 @@ public:
 	float time;
 	float value;
 	float tangentIn, tangentOut;
-	const char* ruleIn, *ruleOut;
+	int ruleIn, ruleOut;
 	float a, b, c, d; //Cubic Coeeficients
 	Keyframe* prev, *next;
 
