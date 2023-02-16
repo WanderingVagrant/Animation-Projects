@@ -182,7 +182,17 @@ float Channel::eval(float t)
 			return eval(nt + keyframes[0]->time) + ((int) ((t- keyframes[0]->time) /range)  ) * (keyframes[numKeyframes - 1]->value - keyframes[0]->value);
 		}
 		if (extrapOut == 4) {
-			return 0;
+			float range = keyframes[numKeyframes - 1]->time - keyframes[0]->time;
+			if (t - keyframes[0]->time < 0) {
+				t = t + range;
+			}
+			float nt = fmod(t - keyframes[0]->time, range);
+			if ((((int)((t - keyframes[0]->time) / range)) % 2) == 0) {
+				return eval(nt + keyframes[0]->time);
+			}
+			else {
+				return eval(keyframes[numKeyframes - 1]->time - nt);
+			}
 		}
 	}
 
