@@ -7,6 +7,7 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Cube* Window::cube;
+Cloth* Window::cloth;
 
 // Camera Properties
 Camera* Cam;
@@ -34,9 +35,11 @@ bool Window::initializeProgram() {
 
 bool Window::initializeObjects() {
     // Create a cube
-    cube = new Cube();
+    //cube = new Cube();
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
+    //Create new Cloth
 
+    cloth = new Cloth();
     return true;
 }
 
@@ -106,7 +109,7 @@ void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
 
-    cube->update();
+    cloth->update();
 }
 
 void Window::displayCallback(GLFWwindow* window) {
@@ -114,7 +117,7 @@ void Window::displayCallback(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render the object.
-    cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    cloth->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

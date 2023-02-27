@@ -4,6 +4,7 @@
 #include "Cube.h"
 #include "Shader.h"
 #include "core.h"
+#include "Cloth.h"
 
 class Window {
 public:
@@ -14,6 +15,7 @@ public:
 
     // Objects to render
     static Cube* cube;
+    static Cloth* cloth;
 
     // Shader Program
     static GLuint shaderProgram;
