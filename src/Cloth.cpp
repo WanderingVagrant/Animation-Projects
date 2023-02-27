@@ -7,3 +7,7 @@ void Cloth::update()
 void Cloth::draw(const glm::mat4& viewProjMtx, GLuint shader)
 {
 }
+
+Cloth::Cloth(int numparts)
+{
+}
