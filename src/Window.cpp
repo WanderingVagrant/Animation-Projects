@@ -39,7 +39,7 @@ bool Window::initializeObjects() {
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
     //Create new Cloth
 
-    cloth = new Cloth(50);
+    cloth = new Cloth();
     return true;
 }
 

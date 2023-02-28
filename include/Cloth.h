@@ -1,6 +1,11 @@
 #pragma once
 #include "core.h"
 #include <vector>
+#include "Particle.h"
+#include <random>
+#include "Triangle.h"
+#include "SpringDamper.h"
+
 class Cloth {
 private:
     GLuint VAO;
@@ -11,12 +16,15 @@ private:
 
     // Cloth Information
     std::vector<glm::vec3> positions;
+    std::vector<Particle> particles;
     std::vector<glm::vec3> normals;
     std::vector<unsigned int> indices;
-    int numparts;
+    std::vector<Triangle> triangles;
+    std::vector<SpringDamper> sdamps;
 
+    int numparts;
 public:
 	void update();
 	void draw(const glm::mat4& viewProjMtx, GLuint shader);
-    Cloth(int numparts);
+    Cloth();
 };
