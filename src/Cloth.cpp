@@ -18,9 +18,15 @@ void Cloth::draw(const glm::mat4& viewProjMtx, GLuint shader)
     // Bind the VAO
     glBindVertexArray(VAO);
 
+    //Turn on wireframe mode
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     // draw the points using triangles, indexed with the EBO
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    
+    //Turn off wireframe mode
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+    
     // Unbind the VAO and shader program
     glBindVertexArray(0);
     glUseProgram(0);
@@ -57,7 +63,7 @@ Cloth::Cloth()
 
     // Build Triangles and Indicies and Spring damper
     triangles.reserve((cols - 1) * (rows - 1) * 2);
-    sdamps.reserve((cols - 1) * (rows - 1) * 3);
+    sdamps.reserve((cols - 1) * (rows - 1) * 4);
     indices.reserve(triangles.size() * 3);
     for (int i = 0; i < rows-1; ++i) {
         for (int j = 0; j < cols-1; ++j) {
@@ -74,6 +80,7 @@ Cloth::Cloth()
             sdamps.push_back(SpringDamper(particles.at(i * cols + j), particles.at(i * cols + (j + 1))));
             sdamps.push_back(SpringDamper(particles.at(i * cols + j), particles.at((i + 1) * cols + (j + 1))));
             sdamps.push_back(SpringDamper(particles.at(i * cols + j), particles.at((i + 1) * cols + (j))));
+            sdamps.push_back(SpringDamper(particles.at(i * cols + (j + 1)), particles.at((i + 1) * cols + (j))));
         }
     }
 
