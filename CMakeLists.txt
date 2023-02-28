@@ -38,7 +38,7 @@ link_directories(
 )
 
 # Add executable
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} "include/PhysWorld.h" "src/PhysWorld.cpp" "include/Cloth.h" "src/Cloth.cpp")
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} "include/PhysWorld.h" "src/PhysWorld.cpp" "include/Cloth.h" "src/Cloth.cpp" "include/Particle.h" "src/Particle.cpp" "include/Triangle.h" "src/Triangle.cpp" "include/SpringDamper.h" "src/SpringDamper.cpp")
 
 # Link libraries
 target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} glew32s.lib glfw3)
