@@ -5,9 +5,10 @@ void Cloth::update()
 
     float timestep = glfwGetTime();
 
+    glfwSetTime(0);
     //Compute forces
     
-    for (Triangle const& tri : triangles) {
+    for (Triangle & tri : triangles) {
         tri.computeForce();
     }
     
@@ -21,6 +22,7 @@ void Cloth::update()
         part.update(timestep);
     }
 
+    
     //Implement dynamic smooth shading by averaging triangle normals
     for (Triangle tri : triangles) {
         tri.computeNorm();
@@ -31,6 +33,7 @@ void Cloth::update()
     for (Particle& part : particles) {
         part.normal = glm::normalize(part.normal);
     }
+    
 
     //Send updated data
     // Bind to the first VBO - We will use it to store the vertices
@@ -45,7 +48,6 @@ void Cloth::update()
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
 
-    glfwSetTime(0);
 }
 
 void Cloth::draw(const glm::mat4& viewProjMtx, GLuint shader)
@@ -85,8 +87,8 @@ Cloth::Cloth()
     color = glm::vec3(1.0f, 0.95f, 0.1f);
     float width = 5;
     float height = 5;
-    int cols = 20;
-    int rows = 20;
+    int cols = 15;
+    int rows = 15;
     numparts = cols * rows;
     mass = PhysWorld::clothdensity * width * height;
     float partmass = mass / numparts;
@@ -114,7 +116,6 @@ Cloth::Cloth()
     indices.reserve(triangles.size() * 3);
     for (int i = 0; i < rows-1; ++i) {
         for (int j = 0; j < cols-1; ++j) {
-
             //triangles
             triangles.push_back(Triangle(particles.at(i*cols + j), particles.at(i * cols + (j+1)), particles.at((i+1) * cols + (j + 1)) ));
             triangles.push_back(Triangle(particles.at(i * cols + j), particles.at((i + 1) * cols + (j + 1)), particles.at((i + 1) * cols + (j))));
@@ -133,6 +134,16 @@ Cloth::Cloth()
             }
         }
     }
+    
+    for (Particle& part : particles) {
+        float zoffset = ((float)rand()) / RAND_MAX * 0.02f - 0.01;
+        float yoffset = ((float)rand()) / RAND_MAX * 0.02f - 0.01;
+        float xoffset = ((float) rand()) / RAND_MAX * 0.02f - 0.01;
+        part.position.x += xoffset;
+        part.position.y += yoffset;
+        part.position.z += zoffset;
+    }
+    
 
     // Generate a vertex array (VAO) and two vertex buffer objects (VBO).
     glGenVertexArrays(1, &VAO);

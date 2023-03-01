@@ -10,5 +10,5 @@ public:
 	glm::vec3 normal;
 	Triangle(Particle& p1, Particle& p2, Particle& p3);
 	void computeNorm();
-	void computeForce() const;
+	void computeForce();
 };

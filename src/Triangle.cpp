@@ -11,8 +11,9 @@ void Triangle::computeNorm()
 	normal = glm::normalize(glm::cross(p2.position - p1.position, p3.position - p1.position));
 }
 
-void Triangle::computeForce() const
+void Triangle::computeForce()
 {
+	computeNorm();
 	glm::vec3 vel = ((p1.velocity + p2.velocity + p3.velocity) * (1.0f / 3.0f))- PhysWorld::windmag * glm::normalize(PhysWorld::winddir);
 	if (glm::length(vel) == 0) {
 		return;
