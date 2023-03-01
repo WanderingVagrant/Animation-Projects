@@ -21,6 +21,7 @@ private:
     std::vector<unsigned int> indices;
     std::vector<Triangle> triangles;
     std::vector<SpringDamper> sdamps;
+    float mass;
 
     int numparts;
 public:
