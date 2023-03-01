@@ -107,11 +107,14 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 // update and draw functions
 void Window::idleCallback() {
     // Perform any updates as necessary.
+
+    /*
     static int counter = 0;
     counter++;
     if (counter % 100 == 0) {
         printf("Count value:%d", counter);
     }
+    */
     Cam->Update();
 
     cloth->update();
