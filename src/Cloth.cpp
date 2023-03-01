@@ -87,8 +87,8 @@ Cloth::Cloth()
     color = glm::vec3(1.0f, 0.95f, 0.1f);
     float width = 5;
     float height = 5;
-    int cols = 15;
-    int rows = 15;
+    int cols = 20;
+    int rows = 20;
     numparts = cols * rows;
     mass = PhysWorld::clothdensity * width * height;
     float partmass = mass / numparts;
