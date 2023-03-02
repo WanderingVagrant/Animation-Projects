@@ -20,6 +20,8 @@ public:
     static Ground* ground;
     // Shader Program
     static GLuint shaderProgram;
+    //Grounder Shader
+    static GLuint shaderground;
 
     // Act as Constructors and desctructors
     static bool initializeProgram();

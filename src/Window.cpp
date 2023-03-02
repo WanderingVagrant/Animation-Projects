@@ -19,12 +19,13 @@ int MouseX, MouseY;
 
 // The shader program id
 GLuint Window::shaderProgram;
+GLuint Window::shaderground;
 
 // Constructors and desctructors
 bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
-
+    shaderground = LoadShaders("shaders/shaderg.vert", "shaders/shader.frag");
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -42,6 +43,7 @@ bool Window::initializeObjects() {
 
     cloth = new Cloth();
     ground = new Ground();
+   // cube = new Cube();
     return true;
 }
 
@@ -51,6 +53,7 @@ void Window::cleanUp() {
 
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
+    glDeleteProgram(shaderground);
 }
 
 // for the Window
@@ -128,8 +131,8 @@ void Window::displayCallback(GLFWwindow* window) {
 
     // Render the object.
     cloth->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-    ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-
+    ground->draw(Cam->GetViewProjectMtx(), Window::shaderground);
+    //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
     // Swap buffers.

@@ -10,7 +10,7 @@ private:
     glm::vec3 color;
 
     // Ground Information
-    std::vector<glm::vec3> positions;
+    std::vector<glm::vec4> positions;
     std::vector<glm::vec3> normals;
     std::vector<unsigned int> indices;
 

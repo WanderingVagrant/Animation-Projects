@@ -2,17 +2,20 @@
 
 Ground::Ground()
 {
-
+    // Model matrix.
+    model = glm::mat4(1.0f);
     // The color of the cube. Try setting it to something else!
-    color = glm::vec3(1.0f, 0.95f, 0.1f);
+    color = glm::vec3(0.0f, 1.0f, 0.0f);
 
     // Specify vertex positions
     positions = {
         // Front
-        glm::vec3(0, 0, 0),
-        glm::vec3(1, 0, 0),
-        glm::vec3(0, 1, 0),
-        glm::vec3(0, 0, 1) };
+        glm::vec4(0, -0.01, 0, 1),
+        glm::vec4(1, -0.01, 0, 0),
+        glm::vec4(0, -0.01, -1, 0),
+        glm::vec4(-1, -0.01, 0, 0),
+        glm::vec4(0, -0.01, 1, 0) ,
+    };
 
     // Specify normals
     normals = {
@@ -20,12 +23,14 @@ Ground::Ground()
         glm::vec3(0, 1, 0),
         glm::vec3(0, 1, 0),
         glm::vec3(0, 1, 0),
-        glm::vec3(0, 1, 0) };
+        glm::vec3(0, 1, 0),
+        glm::vec3(0, 1, 0) 
+    };
 
     // Specify indices
     indices = {
         0, 1, 2, 0, 2, 3,        // Front
-        0, 3, 4, 0, 4, 1 };
+        0, 3, 4, 0, 4, 1, };
 
     // Generate a vertex array (VAO) and two vertex buffer objects (VBO).
     glGenVertexArrays(1, &VAO);
@@ -37,9 +42,9 @@ Ground::Ground()
 
     // Bind to the first VBO - We will use it to store the vertices
     glBindBuffer(GL_ARRAY_BUFFER, VBO_positions);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * positions.size(), positions.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * positions.size(), positions.data(), GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
 
     // Bind to the second VBO - We will use it to store the normals
     glBindBuffer(GL_ARRAY_BUFFER, VBO_normals);
