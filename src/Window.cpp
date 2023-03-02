@@ -161,6 +161,32 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
                 break;
         }
     }
+    // Check for a key press.
+    if (action == GLFW_REPEAT) {
+        switch (key) {
+        case GLFW_KEY_W:
+            cloth->shiftz(-0.1);
+            break;
+        case GLFW_KEY_A:
+            cloth->shiftx(-0.1);
+            break;
+        case GLFW_KEY_S:
+            cloth->shiftz(0.1);
+            break;
+        case GLFW_KEY_D:
+            cloth->shiftx(0.1);
+            break;
+        case GLFW_KEY_Q:
+            cloth->shifty(0.1);
+            break;
+        case GLFW_KEY_E:
+            cloth->shifty(-0.1);
+            break;
+
+        default:
+            break;
+        }
+    }
 }
 
 void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods) {

@@ -78,6 +78,33 @@ void Cloth::draw(const glm::mat4& viewProjMtx, GLuint shader)
     glUseProgram(0);
 }
 
+void Cloth::shiftx(float shift)
+{
+    for (Particle& part : particles) {
+        if (part.fixed) {
+            part.position.x += shift;
+        }
+    }
+}
+
+void Cloth::shifty(float shift)
+{
+    for (Particle& part : particles) {
+        if (part.fixed) {
+            part.position.y+= shift;
+        }
+    }
+}
+
+void Cloth::shiftz(float shift)
+{
+    for (Particle& part : particles) {
+        if (part.fixed) {
+            part.position.z+= shift;
+        }
+    }
+}
+
 Cloth::Cloth()
 {
     // Model matrix.

@@ -22,6 +22,9 @@ void Particle::update(float t)
 	position += velocity * t;
 
 	//Collisions
+	if (position.y < 0) {
+		position.y = 0;
+	}
 
 	//Zero out normal
 	normal = glm::vec3(0);

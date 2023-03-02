@@ -27,5 +27,8 @@ private:
 public:
 	void update();
 	void draw(const glm::mat4& viewProjMtx, GLuint shader);
+    void shiftx(float shift);
+    void shifty(float shift);
+    void shiftz(float shift);
     Cloth();
 };
