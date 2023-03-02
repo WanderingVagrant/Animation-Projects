@@ -4,64 +4,28 @@ Ground::Ground()
 {
 
     // The color of the cube. Try setting it to something else!
-    color = glm::vec3(0.0f, 1.0f, 0.0f);
+    color = glm::vec3(1.0f, 0.95f, 0.1f);
 
     // Specify vertex positions
     positions = {
         // Front
-        glm::vec3(cubeMin.x, cubeMin.y, cubeMax.z),
-        glm::vec3(cubeMax.x, cubeMin.y, cubeMax.z),
-        glm::vec3(cubeMax.x, cubeMax.y, cubeMax.z),
-        glm::vec3(cubeMin.x, cubeMax.y, cubeMax.z),
-) };
+        glm::vec3(0, 0, 0),
+        glm::vec3(1, 0, 0),
+        glm::vec3(0, 1, 0),
+        glm::vec3(0, 0, 1) };
 
     // Specify normals
     normals = {
         // Front
-        glm::vec3(0, 0, 1),
-        glm::vec3(0, 0, 1),
-        glm::vec3(0, 0, 1),
-        glm::vec3(0, 0, 1),
-
-        // Back
-        glm::vec3(0, 0, -1),
-        glm::vec3(0, 0, -1),
-        glm::vec3(0, 0, -1),
-        glm::vec3(0, 0, -1),
-
-        // Top
         glm::vec3(0, 1, 0),
         glm::vec3(0, 1, 0),
         glm::vec3(0, 1, 0),
-        glm::vec3(0, 1, 0),
-
-        // Bottom
-        glm::vec3(0, -1, 0),
-        glm::vec3(0, -1, 0),
-        glm::vec3(0, -1, 0),
-        glm::vec3(0, -1, 0),
-
-        // Left
-        glm::vec3(-1, 0, 0),
-        glm::vec3(-1, 0, 0),
-        glm::vec3(-1, 0, 0),
-        glm::vec3(-1, 0, 0),
-
-        // Right
-        glm::vec3(1, 0, 0),
-        glm::vec3(1, 0, 0),
-        glm::vec3(1, 0, 0),
-        glm::vec3(1, 0, 0) };
+        glm::vec3(0, 1, 0) };
 
     // Specify indices
     indices = {
         0, 1, 2, 0, 2, 3,        // Front
-        4, 5, 6, 4, 6, 7,        // Back
-        8, 9, 10, 8, 10, 11,     // Top
-        12, 13, 14, 12, 14, 15,  // Bottom
-        16, 17, 18, 16, 18, 19,  // Left
-        20, 21, 22, 20, 22, 23,  // Right
-    };
+        0, 3, 4, 0, 4, 1 };
 
     // Generate a vertex array (VAO) and two vertex buffer objects (VBO).
     glGenVertexArrays(1, &VAO);
@@ -95,4 +59,21 @@ Ground::Ground()
 
 void Ground::draw(const glm::mat4& viewProjMtx, GLuint shader)
 {
+    // actiavte the shader program
+    glUseProgram(shader);
+
+    // get the locations and send the uniforms to the shader
+    glUniformMatrix4fv(glGetUniformLocation(shader, "viewProj"), 1, false, (float*)&viewProjMtx);
+    glUniformMatrix4fv(glGetUniformLocation(shader, "model"), 1, GL_FALSE, (float*)&model);
+    glUniform3fv(glGetUniformLocation(shader, "DiffuseColor"), 1, &color[0]);
+
+    // Bind the VAO
+    glBindVertexArray(VAO);
+
+    // draw the points using triangles, indexed with the EBO
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+
+    // Unbind the VAO and shader program
+    glBindVertexArray(0);
+    glUseProgram(0);
 }
