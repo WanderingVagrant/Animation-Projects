@@ -8,6 +8,7 @@ const char* Window::windowTitle = "Model Environment";
 // Objects to render
 Cube* Window::cube;
 Cloth* Window::cloth;
+Ground* Window::ground;
 
 // Camera Properties
 Camera* Cam;
@@ -40,6 +41,7 @@ bool Window::initializeObjects() {
     //Create new Cloth
 
     cloth = new Cloth();
+    ground = new Ground();
     return true;
 }
 
@@ -126,6 +128,7 @@ void Window::displayCallback(GLFWwindow* window) {
 
     // Render the object.
     cloth->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
