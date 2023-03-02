@@ -54,7 +54,7 @@ void Cloth::draw(const glm::mat4& viewProjMtx, GLuint shader)
 {
     // actiavte the shader program
     glUseProgram(shader);
-    glm::vec3 color = glm::vec3(0.5f, 0.95f, 0.2f);
+    glm::vec3 color = glm::vec3(0.95f, 0.1f, 0.3f);
     // get the locations and send the uniforms to the shader
     glUniformMatrix4fv(glGetUniformLocation(shader, "viewProj"), 1, false, (float*)&viewProjMtx);
     glUniformMatrix4fv(glGetUniformLocation(shader, "model"), 1, GL_FALSE, (float*)&model);
@@ -105,17 +105,13 @@ void Cloth::shiftz(float shift)
     }
 }
 
-Cloth::Cloth()
+Cloth::Cloth(float width, float height, int cols, int rows)
 {
     // Model matrix.
     model = glm::mat4(1.0f);
 
     // The color of the cube. Try setting it to something else!
     color = glm::vec3(1.0f, 0.95f, 0.1f);
-    float width = 5;
-    float height = 5;
-    int cols = 20;
-    int rows = 20;
     numparts = cols * rows;
     mass = PhysWorld::clothdensity * width * height;
     float partmass = mass / numparts;

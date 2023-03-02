@@ -30,5 +30,5 @@ public:
     void shiftx(float shift);
     void shifty(float shift);
     void shiftz(float shift);
-    Cloth();
+    Cloth(float width, float height, int  cols, int rows);
 };
